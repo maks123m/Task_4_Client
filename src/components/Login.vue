@@ -2,9 +2,9 @@
     <form>
         <h1>Sign in</h1>
         <label>User name</label>
-        <input type "text" required v-model="username" />
+        <input type="text" required v-model="username" />
         <label>Password</label>
-        <input type "password" required v-model="password" />
+        <input type="password" required v-model="password" />
         <hr />
         <button type="submit">Login</button>
     </form>
@@ -14,8 +14,8 @@
 export default {
     data() {
         return {
-            username "",
-            password "",
+            username: "",
+            password: "",
         };
     },
     methods: {
