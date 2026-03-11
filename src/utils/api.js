@@ -1,4 +1,4 @@
-const API = process.env.VUE_APP_API;
+const API = 'http://lifestealer86.ru/api-shop';
 
 export const loginRequest = (user) => {
     return new Promise((resolve, reject) => {
@@ -27,12 +27,56 @@ export const loginRequest = (user) => {
 
 export const signupRequest = (user) => {
     return new Promise((resolve, reject) => {
-        fetch(`${API}/register`, {
+        fetch(`${API}/signup`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify(user),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        console.log('Ошибка сервера:', response.status, data);
+                        reject(data);
+                    }).catch(() => {
+                        console.log('Статус ошибки:', response.status);
+                        reject();
+                    });
+                }
+                return response.json();
+            })
+            .then((result) => {
+                console.log('Успешная регистрация:', result);
+                resolve(result);
+            })
+            .catch((error) => {
+                console.log('Ошибка fetch:', error);
+                reject(error);
+            });
+    });
+};
+
+export const getProducts = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/products`)
+            .then((response) => response.json())
+            .then((result) => {
+                resolve(result.data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};
+
+export const logoutRequest = (token) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/logout`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
             .then((response) => {
                 if (!response.ok) {

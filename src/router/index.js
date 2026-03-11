@@ -24,7 +24,6 @@ const routes = [
     component: function () {
       return import('../views/HomeView.vue');
     },
-    beforeEnter: ifAuthenticated,
   },
   {
     path: '/login',
@@ -37,19 +36,14 @@ const routes = [
   {
     path: '/register',
     name: 'register',
-    component: () => import('../components/Signup.vue'),
+    component: () => import('../components/Register.vue'),
     beforeEnter: ifNotAuthenticated,
   },
-
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
-
-
-
 
 export default router

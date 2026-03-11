@@ -13,6 +13,7 @@
         <hr />
 
         <button type="submit">Login</button>
+        <button type="button" @click="goBack">Back</button>
     </form>
 </template>
 
@@ -42,6 +43,9 @@ export default {
                 .catch(() => {
                     this.error = true;
                 });
+        },
+        goBack() {
+            this.$router.push("/");
         }
     }
 };
@@ -68,5 +72,9 @@ button {
 
 hr {
     margin: 10px 0;
+}
+
+button {
+    margin: 5px 0;
 }
 </style>
