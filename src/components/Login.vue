@@ -1,11 +1,17 @@
 <template>
-    <form>
+    <form class="login" @submit.prevent="login">
         <h1>Sign in</h1>
-        <label>User name</label>
-        <input type="text" required v-model="username" />
+
+        <label>Email</label>
+        <input type="email" required v-model="email" />
+
         <label>Password</label>
         <input type="password" required v-model="password" />
+
+        <p v-if="error" class="error">Login failed</p>
+
         <hr />
+
         <button type="submit">Login</button>
     </form>
 </template>
@@ -14,22 +20,30 @@
 export default {
     data() {
         return {
-            username: "",
+            email: "",
             password: "",
+            error: false
         };
     },
     methods: {
         login() {
             const userData = {
-                username: this.username,
-                password: this.password,
+                email: this.email,
+                password: this.password
             };
 
+            this.error = false;
+
             this.$store
-                .dispatch(AUTH_REQUEST, userData)
-                .then(() => this.$router.push("/"));
-        },
-    },
+                .dispatch("AUTH_REQUEST", userData)
+                .then(() => {
+                    this.$router.push("/");
+                })
+                .catch(() => {
+                    this.error = true;
+                });
+        }
+    }
 };
 </script>
 
@@ -41,11 +55,17 @@ export default {
     padding: 10px;
     margin: 0 auto;
 }
+
 .login input,
 button {
     border: 1px solid black;
     border-radius: 5px;
 }
+
+.error {
+    color: red;
+}
+
 hr {
     margin: 10px 0;
 }

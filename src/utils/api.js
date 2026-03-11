@@ -9,8 +9,41 @@ export const loginRequest = (user) => {
             },
             body: JSON.stringify(user),
         })
-            .then((response) => response.json())
-            .then((result) => resolve(result.data.user_token))
+            .then((response) => {
+                if (!response.ok) {
+                    reject();
+                    return;
+                }
+                return response.json();
+            })
+            .then((result) => {
+                resolve(result.data.user_token);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};
+
+export const signupRequest = (user) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify(user),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    reject();
+                    return;
+                }
+                return response.json();
+            })
+            .then(() => {
+                resolve();
+            })
             .catch((error) => {
                 reject(error);
             });
