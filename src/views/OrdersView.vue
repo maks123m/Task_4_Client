@@ -1,10 +1,10 @@
 <template>
     <div class="orders">
-        <h1>My Orders</h1>
+        <h1>Мои заказы</h1>
 
         <div class="actions">
-            <button @click="createNewOrder">Create Order</button>
-            <button @click="goHome">Back to Home</button>
+            <button @click="createNewOrder">Создать заказ</button>
+            <button @click="goHome">Назад</button>
         </div>
 
         <p v-if="error" class="error">{{ error }}</p>
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <p v-else class="no-orders">No orders yet</p>
+        <p v-else class="no-orders">Заказов нет</p>
     </div>
 </template>
 

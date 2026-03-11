@@ -145,3 +145,81 @@ export const createOrder = () => {
             });
     });
 };
+
+export const getCart = () => {
+    const token = localStorage.getItem('myAppToken');
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    reject();
+                    return;
+                }
+                return response.json();
+            })
+            .then((result) => {
+                resolve(result.data);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};
+
+export const addToCart = (productId) => {
+    const token = localStorage.getItem('myAppToken');
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    reject();
+                    return;
+                }
+                return response.json();
+            })
+            .then((result) => {
+                resolve(result);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};
+
+export const removeFromCart = (cartId) => {
+    const token = localStorage.getItem('myAppToken');
+    return new Promise((resolve, reject) => {
+        fetch(`${API}/cart/${cartId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    reject();
+                    return;
+                }
+                return response.json();
+            })
+            .then((result) => {
+                resolve(result);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+};

@@ -1,8 +1,8 @@
 <template>
     <form class="register" @submit.prevent="register">
-        <h1>Register</h1>
+        <h1>Регистрация</h1>
 
-        <label>Full Name</label>
+        <label>ФИО</label>
         <input 
             type="text" 
             required 
@@ -22,7 +22,7 @@
         />
         <p v-if="errors.email" class="error-text">{{ errors.email }}</p>
 
-        <label>Password</label>
+        <label>Пароль</label>
         <input 
             type="password" 
             required 
@@ -36,8 +36,8 @@
 
         <hr />
 
-        <button type="submit">Register</button>
-        <button type="button" @click="goBack">Back</button>
+        <button type="submit">Регистрация</button>
+        <button type="button" @click="goBack">Назад</button>
     </form>
 </template>
 

@@ -1,19 +1,19 @@
 <template>
     <form class="login" @submit.prevent="login">
-        <h1>Sign in</h1>
+        <h1>Авторизация</h1>
 
         <label>Email</label>
         <input type="email" required v-model="email" />
 
-        <label>Password</label>
+        <label>Пароль</label>
         <input type="password" required v-model="password" />
 
         <p v-if="error" class="error">Login failed</p>
 
         <hr />
 
-        <button type="submit">Login</button>
-        <button type="button" @click="goBack">Back</button>
+        <button type="submit">Войти</button>
+        <button type="button" @click="goBack">Назад</button>
     </form>
 </template>
 
