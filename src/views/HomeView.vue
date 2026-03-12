@@ -19,6 +19,7 @@
 
     <div class="products">
       <div class="product" v-for="product in limitedProducts" :key="product.id">
+        <img :src="`http://lifestealer86.ru/${product.image}`" class="product-image" />
         <h3>{{ product.name }}</h3>
         <p class="description">{{ product.description }}</p>
         <div class="product-bottom">
@@ -138,13 +139,22 @@ h1 {
 
 .product {
   width: 220px;
+  height: 450px;
   border: 1px solid black;
   padding: 15px;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  height: 280px;
   background: white;
+}
+
+.product-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .product h3 {
