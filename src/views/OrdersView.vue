@@ -11,9 +11,9 @@
 
         <div v-if="orders.length > 0" class="order-list">
             <div class="order" v-for="order in orders" :key="order.id">
-                <h3>Order #{{ order.id }}</h3>
-                <p>Products: {{ order.products.join(', ') }}</p>
-                <p>Total: {{ order.order_price }} $</p>
+                <h3>Заказ #{{ order.id }}</h3>
+                <p>Товары: {{ order.products.join(', ') }}</p>
+                <p>Сумма: {{ order.order_price }} ₽</p>
             </div>
         </div>
 
@@ -52,9 +52,13 @@ export default {
                 })
                 .catch((err) => {
                     if (err && err.error && err.error.message) {
-                        this.error = err.error.message;
+                        if (err.error.message === "Cart is empty") {
+                            this.error = "Корзина пуста";
+                        } else {
+                            this.error = err.error.message;
+                        }
                     } else {
-                        this.error = "Failed to create order";
+                        this.error = "Не удалось создать заказ";
                     }
                 });
         },
@@ -68,24 +72,38 @@ export default {
 <style scoped>
 .orders {
     width: 600px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+}
+
+.orders h1 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .actions {
     margin-bottom: 20px;
+    text-align: center;
 }
 
-button {
+.actions button {
     margin: 5px;
     padding: 8px 16px;
     border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
+    background: #d1effd;
+}
+
+.actions button:hover {
+    background: #73c1e3;
 }
 
 .order {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
@@ -102,10 +120,14 @@ button {
 .error {
     color: red;
     margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
 }
 
 .no-orders {
     color: #666;
     font-style: italic;
+    text-align: center;
+    padding: 20px;
 }
 </style>

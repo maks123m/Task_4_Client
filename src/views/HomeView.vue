@@ -1,27 +1,30 @@
 <template>
   <div class="home">
-    <h1>Каталог</h1>
-
     <div class="menu">
-      <template v-if="!isAuth">
-        <button @click="goLogin">Авторизация</button>
-        <button @click="goRegister">Регистрация</button>
-      </template>
+      <div class="menu-buttons">
+        <template v-if="!isAuth">
+          <button @click="goLogin">Авторизация</button>
+          <button @click="goRegister">Регистрация</button>
+        </template>
 
-      <template v-else>
-        <button @click="goCart">Корзина</button>
-        <button @click="goOrders">Мои заказы</button>
-        <button @click="logout">Выход</button>
-      </template>
+        <template v-else>
+          <button @click="goCart">Корзина</button>
+          <button @click="goOrders">Мои заказы</button>
+          <button @click="logout">Выход</button>
+        </template>
+      </div>
     </div>
 
-    <div class="products">
-      <div class="product" v-for="product in products" :key="product.id">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.description }}</p>
-        <p class="price">{{ product.price }} $</p>
+    <h1>Каталог товаров</h1>
 
-        <button v-if="isAuth" @click="addToCart(product.id)">Добавить в корзину</button>
+    <div class="products">
+      <div class="product" v-for="product in limitedProducts" :key="product.id">
+        <h3>{{ product.name }}</h3>
+        <p class="description">{{ product.description }}</p>
+        <div class="product-bottom">
+          <p class="price">{{ product.price }} ₽</p>
+          <button v-if="isAuth" @click="addToCart(product.id)">Добавить в корзину</button>
+        </div>
       </div>
     </div>
   </div>
@@ -39,6 +42,9 @@ export default {
   computed: {
     isAuth() {
       return this.$store.getters.isAuthenticated;
+    },
+    limitedProducts() {
+      return this.products.slice(0, 9);
     }
   },
   mounted() {
@@ -75,7 +81,7 @@ export default {
           alert("Добавлено в корзину");
         })
         .catch(() => {
-          alert("Потрачено");
+          alert("Ошибка");
         });
     }
   }
@@ -84,29 +90,94 @@ export default {
 
 <style scoped>
 .home {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  background-color: #90EE90;
+  width: 100%;
+  padding: 15px 0;
+}
+
+.menu-buttons {
   width: 800px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
-.menu {
-  margin-bottom: 20px;
-}
-button {
-  margin: 5px;
-  padding: 5px 10px;
+
+.menu-buttons button {
+  padding: 8px 16px;
   border: 1px solid black;
   border-radius: 5px;
+  cursor: pointer;
+  background: #d1effd;
 }
+
+.menu-buttons button:hover {
+  background: #73c1e3;
+}
+
+h1 {
+  width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
 .products {
+  width: 800px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
+  padding-bottom: 40px;
 }
+
 .product {
   width: 220px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
+  border: 1px solid black;
+  padding: 15px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  height: 280px;
+  background: white;
 }
+
+.product h3 {
+  margin: 0 0 10px 0;
+  min-height: 40px;
+}
+
+.product .description {
+  margin: 5px 0;
+  flex-grow: 1;
+  min-height: 60px;
+}
+
+.product-bottom {
+  margin-top: auto;
+}
+
 .price {
   font-weight: bold;
+  color: black;
+  margin: 10px 0;
+}
+
+.product button {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #d1effd;
+}
+
+.product button:hover {
+  background: #73c1e3;
 }
 </style>

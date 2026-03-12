@@ -60,27 +60,27 @@ export default {
         validateEmail() {
             this.errors.email = "";
             if (!this.email) {
-                this.errors.email = "Email is required";
+                this.errors.email = "Email обязателен";
             } else if (!/\S+@\S+\.\S+/.test(this.email)) {
-                this.errors.email = "Invalid email format";
+                this.errors.email = "Неверный формат email";
             }
             return !this.errors.email;
         },
         validateFullName() {
             this.errors.fullName = "";
             if (!this.fullName) {
-                this.errors.fullName = "Full name is required";
+                this.errors.fullName = "ФИО обязательно";
             } else if (this.fullName.length < 2) {
-                this.errors.fullName = "Name must be at least 2 characters";
+                this.errors.fullName = "Минимум 2 символа";
             }
             return !this.errors.fullName;
         },
         validatePassword() {
             this.errors.password = "";
             if (!this.password) {
-                this.errors.password = "Password is required";
+                this.errors.password = "Пароль обязателен";
             } else if (this.password.length < 6) {
-                this.errors.password = "Password must be at least 6 characters";
+                this.errors.password = "Минимум 6 символов";
             }
             return !this.errors.password;
         },
@@ -111,7 +111,7 @@ export default {
                     if (err && err.message) {
                         this.serverError = err.message;
                     } else {
-                        this.serverError = "Registration failed";
+                        this.serverError = "Ошибка регистрации";
                     }
                 });
         },
@@ -126,32 +126,65 @@ export default {
 .register {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    padding: 10px;
-    margin: 0 auto;
+    width: 350px;
+    padding: 30px;
+    margin: 50px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
 }
 
-.register input,
-button {
+.register h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.register label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.register input {
+    padding: 10px;
+    margin-bottom: 5px;
     border: 1px solid black;
     border-radius: 5px;
+    font-size: 14px;
+}
+
+.register input:focus {
+    outline: none;
+    background: #f0f0f0;
 }
 
 .register input.error {
     border-color: red;
+    background: #fff5f5;
 }
 
 .error-text {
     color: red;
     font-size: 12px;
-    margin: 2px 0 8px 0;
+    margin: 0 0 10px 0;
 }
 
 hr {
-    margin: 10px 0;
+    border: none;
+    border-top: 1px solid black;
+    margin: 20px 0;
 }
 
 button {
-    margin: 5px 0;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #d1effd;
+}
+
+button:hover {
+    background: #73c1e3;
 }
 </style>

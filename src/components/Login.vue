@@ -8,7 +8,7 @@
         <label>Пароль</label>
         <input type="password" required v-model="password" />
 
-        <p v-if="error" class="error">Login failed</p>
+        <p v-if="error" class="error">Неверный email или пароль</p>
 
         <hr />
 
@@ -55,26 +55,61 @@ export default {
 .login {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    padding: 10px;
-    margin: 0 auto;
+    width: 350px;
+    padding: 30px;
+    margin: 50px auto;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
 }
 
-.login input,
-button {
+.login h1 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login input {
+    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid black;
     border-radius: 5px;
+    font-size: 14px;
+}
+
+.login input:focus {
+    outline: none;
+    background: #f0f0f0;
 }
 
 .error {
     color: red;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
 }
 
 hr {
-    margin: 10px 0;
+    border: none;
+    border-top: 1px solid black;
+    margin: 20px 0;
 }
 
 button {
-    margin: 5px 0;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #d1effd;
+}
+
+button:hover {
+    background: #73c1e3;
 }
 </style>

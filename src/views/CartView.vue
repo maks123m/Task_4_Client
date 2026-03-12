@@ -1,36 +1,36 @@
 <template>
     <div class="cart">
-        <h1>Shopping Cart</h1>
+        <h1>Корзина</h1>
 
         <div v-if="cartItems.length > 0">
             <div class="cart-item" v-for="group in groupedCart" :key="group.product_id">
                 <h3>{{ group.name }}</h3>
                 <p>{{ group.description }}</p>
-                <p class="price">{{ group.price }} $ x {{ group.quantity }} = {{ group.total }} $</p>
+                <p class="price">{{ group.price }} ₽ x {{ group.quantity }} = {{ group.total }} ₽</p>
 
                 <div class="controls">
                     <button @click="increaseQuantity(group)">+</button>
                     <button @click="decreaseQuantity(group)">-</button>
-                    <button @click="removeItem(group)" class="delete">Delete</button>
+                    <button @click="removeItem(group)" class="delete">Удалить</button>
                 </div>
             </div>
 
             <div class="summary">
-                <h3>Total: {{ cartTotal }} $</h3>
-                <button @click="checkout" class="checkout">Checkout</button>
+                <h3>Итого: {{ cartTotal }} ₽</h3>
+                <button @click="checkout" class="checkout">Заказать</button>
             </div>
         </div>
 
-        <p v-else class="empty">Cart is empty</p>
+        <p v-else class="empty">Корзина пуста</p>
 
         <hr />
 
-        <button @click="goHome">Back to Home</button>
+        <button @click="goHome">Назад</button>
     </div>
 </template>
 
 <script>
-import { getCart, addToCart, removeFromCart } from "@/utils/api";
+import { getCart, addToCart, removeFromCart, createOrder } from "@/utils/api";
 
 export default {
     data() {
@@ -83,7 +83,7 @@ export default {
                     this.loadCart();
                 })
                 .catch(() => {
-                    alert("Failed to add item");
+                    alert("Не удалось добавить товар");
                 });
         },
         decreaseQuantity(group) {
@@ -93,7 +93,7 @@ export default {
                         this.loadCart();
                     })
                     .catch(() => {
-                        alert("Failed to remove item");
+                        alert("Не удалось удалить товар");
                     });
             }
         },
@@ -104,11 +104,22 @@ export default {
                     this.loadCart();
                 })
                 .catch(() => {
-                    alert("Failed to remove item");
+                    alert("Не удалось удалить товар");
                 });
         },
         checkout() {
-            this.$router.push("/orders");
+            createOrder()
+                .then(() => {
+                    alert("Заказ оформлен!");
+                    this.$router.push("/orders");
+                })
+                .catch((err) => {
+                    if (err && err.error && err.error.message) {
+                        alert(err.error.message);
+                    } else {
+                        alert("Не удалось оформить заказ");
+                    }
+                });
         },
         goHome() {
             this.$router.push("/");
@@ -120,12 +131,20 @@ export default {
 <style scoped>
 .cart {
     width: 600px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+}
+
+.cart h1 {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .cart-item {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     padding: 15px;
     margin: 10px 0;
     border-radius: 5px;
@@ -150,11 +169,21 @@ export default {
     border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
+    background: #d1effd;
+}
+
+.controls button:hover {
+    background: #73c1e3;
 }
 
 .controls button.delete {
     border-color: red;
     color: red;
+    background: white;
+}
+
+.controls button.delete:hover {
+    background: #ffe5e5;
 }
 
 .summary {
@@ -162,6 +191,7 @@ export default {
     padding: 15px;
     border: 1px solid black;
     border-radius: 5px;
+    text-align: center;
 }
 
 .summary h3 {
@@ -169,27 +199,40 @@ export default {
 }
 
 .checkout {
-    padding: 10px 20px;
+    padding: 10px 30px;
     border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
-    background: #4CAF50;
-    color: white;
+    background: #90EE90;
+    font-weight: bold;
+}
+
+.checkout:hover {
+    background: #76d476;
 }
 
 .empty {
     color: #666;
     font-style: italic;
+    text-align: center;
+    padding: 20px;
 }
 
 hr {
     margin: 20px 0;
+    border: none;
+    border-top: 1px solid black;
 }
 
-button {
+.cart button {
     padding: 8px 16px;
     border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
+    background: #d1effd;
+}
+
+.cart button:hover {
+    background: #73c1e3;
 }
 </style>
